@@ -72,10 +72,11 @@ export const Hero = () => {
   }
 
   return (
-    <div className="h-full min-h-screen w-full flex flex-col items-center p-5 space-y-5  bg-subBackground">
+    <div className="h-full min-h-screen w-fit md:w-full overflow-x-auto flex flex-col items-center p-5 space-y-5  bg-subBackground">
       {cities > 0 ? (
-        <div className="space-y-2">
-          <div className="w-full flex justify-end items-end space-x-2">
+        <div className="w-full flex flex-col justify-center items-center space-y-2">
+          {/* Head Row */}
+          <div className="flex justify-end items-end space-x-2">
             {[...Array(cities + 1)].map((n, i) => (
               <input
                 className={`h-10 w-10 flex text-center rounded-lg text-white bg-customGrayHeavy`}
@@ -85,6 +86,7 @@ export const Hero = () => {
             ))}
           </div>
           <div className={`grid grid-flow-col auto-cols-max gap-2 rounded-lg`}>
+            {/* Head Column */}
             <div className="space-y-2">
               {[...Array(cities)].map((n, i) => (
                 <input
@@ -94,6 +96,7 @@ export const Hero = () => {
                 />
               ))}
             </div>
+            {/* Cost Data */}
             {[...Array(cities)].map((rowIndex, i) => (
               <div className={`grid ${getNumOfRows()} gap-2`}>
                 {[...Array(cities)].map((colIndex, j) => (
@@ -132,6 +135,7 @@ export const Hero = () => {
         </button>
       ) : null}
 
+      {/* Form */}
       <form action="" className="flex items-center">
         <div className="h-12 px-10 flex items-center space-x-5">
           <p className="font-maledpan font-bold text-lg text-white">เมือง</p>
@@ -142,10 +146,11 @@ export const Hero = () => {
             onChange={(e) => {
               setCities(parseInt(e.target.value))
               if (costMatrix.length < parseInt(e.target.value)) {
-                for (let i = 0; i < parseInt(e.target.value) - costMatrix.length + 2; i++) {
+                const newCount = parseInt(e.target.value) - costMatrix.length
+                for (let i = 0; i < newCount; i++) {
                   costMatrix.push(Array(parseInt(e.target.value)).fill(0))
                   const newCosts = [...costMatrix]
-                  newCosts.forEach((newCost) => (newCost[costMatrix.length-1] = 0))
+                  newCosts.forEach((newCost) => (newCost[costMatrix.length - 1] = 0))
                   console.log("🚀  newCosts:", newCosts)
                   setCostMatrix(newCosts)
                 }
@@ -164,6 +169,8 @@ export const Hero = () => {
           ประมวลผล
         </button>
       </form>
+
+      {/* Result */}
       <div className="flex flex-col justify-center items-center p-5 space-y-5 rounded-lg text-white font-bold text-lg bg-subInput">
         <div className="w-fit flex justify-center items-center space-x-5 ">
           <p className="font-maledpan">เส้นทางที่เป็นไปได้ทั้งหมด</p>
