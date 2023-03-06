@@ -13,6 +13,7 @@ export const Hero = () => {
   ])
   const [cities, setCities] = useState(8)
   const [result, setResult] = useState({ minTours: [] as any[], minCost: 0 })
+  const [start, setStart] = useState<null | number>(null)
 
   function permute(arr: any): any {
     let permutations = []
@@ -40,7 +41,7 @@ export const Hero = () => {
     return cost
   }
 
-  function solveCircularTSP(cities: number) {
+  function solveCircularTSP(cities: number, fixedStart: number | null = null) {
     let citiesList = Array.from({ length: cities }, (_, index) => index)
     let tours = permute(citiesList)
 
@@ -48,12 +49,19 @@ export const Hero = () => {
     let minTours = []
 
     for (let i = 0; i < tours.length; i++) {
-      let cost = calculateCost(tours[i])
-      if (cost < minCost && tours[i][0] === 0) {
+      let tour = tours[i]
+      let cost = calculateCost(tour)
+
+      // If fixed start point is provided, check that it matches the starting point of the tour
+      if (fixedStart !== null && tour[0] !== fixedStart) {
+        continue
+      }
+
+      if (cost < minCost) {
         minCost = cost
-        minTours = [tours[i]]
-      } else if (cost === minCost && tours[i][0] === 0) {
-        minTours.push(tours[i])
+        minTours = [tour]
+      } else if (cost === minCost) {
+        minTours.push(tour)
       }
     }
 
@@ -138,7 +146,19 @@ export const Hero = () => {
       {/* Form */}
       <form action="" className="flex items-center">
         <div className="h-12 px-10 flex items-center space-x-5">
-          <p className="font-maledpan font-bold text-lg text-white">เมือง</p>
+          <p className="font-maledpan font-bold text-lg text-white">เริ่มที่เมือง</p>
+          <input
+            type="number"
+            className={`h-10 w-10 flex text-center rounded-lg text-black bg-white`}
+            value={start ?? ""}
+            onChange={(e) => {
+              setStart(parseInt(e.target.value))
+            }}
+            min={0}
+          />
+        </div>
+        <div className="h-12 px-10 flex items-center space-x-5">
+          <p className="font-maledpan font-bold text-lg text-white">เมืองทั้งหมด</p>
           <input
             type="number"
             className={`h-10 w-10 flex text-center rounded-lg text-black bg-white`}
@@ -163,7 +183,7 @@ export const Hero = () => {
           className="h-12 px-8 rounded-md font-maledpan font-bold text-lg bg-primary"
           onClick={(e) => {
             e.preventDefault()
-            solveCircularTSP(cities)
+            solveCircularTSP(cities, start ? start - 1 : null)
           }}
         >
           ประมวลผล
