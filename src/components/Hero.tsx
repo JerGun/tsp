@@ -73,48 +73,50 @@ export const Hero = () => {
 
   return (
     <div className="h-full min-h-screen w-full flex flex-col items-center p-5 space-y-5  bg-subBackground">
-      <div className="space-y-2">
-        <div className="w-full flex justify-end items-end space-x-2">
-          {[...Array(cities + 1)].map((n, i) => (
-            <input
-              className={`h-10 w-10 flex text-center rounded-lg text-white bg-customGrayHeavy`}
-              value={i !== 0 ? i : "i/j"}
-              disabled
-            />
-          ))}
-        </div>
-        <div className={`grid grid-flow-col auto-cols-max gap-2 rounded-lg`}>
-          <div className="space-y-2">
-            {[...Array(cities)].map((n, i) => (
+      {cities > 0 ? (
+        <div className="space-y-2">
+          <div className="w-full flex justify-end items-end space-x-2">
+            {[...Array(cities + 1)].map((n, i) => (
               <input
                 className={`h-10 w-10 flex text-center rounded-lg text-white bg-customGrayHeavy`}
-                value={i + 1}
+                value={i !== 0 ? i : "i/j"}
                 disabled
               />
             ))}
           </div>
-          {[...Array(cities)].map((rowIndex, i) => (
-            <div className={`grid ${getNumOfRows()} gap-2`}>
-              {[...Array(cities)].map((colIndex, j) => (
+          <div className={`grid grid-flow-col auto-cols-max gap-2 rounded-lg`}>
+            <div className="space-y-2">
+              {[...Array(cities)].map((n, i) => (
                 <input
-                  type="number"
-                  className={`h-10 w-10 flex text-center rounded-lg ${
-                    i === j ? "text-white bg-customGrayLight" : "text-black bg-white"
-                  }`}
-                  disabled={i === j}
-                  value={i === j ? 0 : costMatrix[i][j]}
-                  onChange={(e) => {
-                    const newMatrix = [...costMatrix]
-                    newMatrix[i][j] = parseInt(e.target.value)
-                    newMatrix[j][i] = parseInt(e.target.value)
-                    setCostMatrix(newMatrix)
-                  }}
+                  className={`h-10 w-10 flex text-center rounded-lg text-white bg-customGrayHeavy`}
+                  value={i + 1}
+                  disabled
                 />
               ))}
             </div>
-          ))}
+            {[...Array(cities)].map((rowIndex, i) => (
+              <div className={`grid ${getNumOfRows()} gap-2`}>
+                {[...Array(cities)].map((colIndex, j) => (
+                  <input
+                    type="number"
+                    className={`h-10 w-10 flex text-center rounded-lg ${
+                      i === j ? "text-white bg-customGrayLight" : "text-black bg-white"
+                    }`}
+                    disabled={i === j}
+                    value={i === j ? 0 : costMatrix[i][j]}
+                    onChange={(e) => {
+                      const newMatrix = [...costMatrix]
+                      newMatrix[i][j] = parseInt(e.target.value)
+                      newMatrix[j][i] = parseInt(e.target.value)
+                      setCostMatrix(newMatrix)
+                    }}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
       {cities > 0 ? (
         <button
           className="font-maledpan font-bold text-lg text-white"
@@ -140,7 +142,9 @@ export const Hero = () => {
             onChange={(e) => {
               setCities(parseInt(e.target.value))
               if (costMatrix.length < parseInt(e.target.value)) {
-                costMatrix.push(Array(parseInt(e.target.value)))
+                for (let i = 0; i < parseInt(e.target.value) - costMatrix.length; i++) {
+                  costMatrix.push(Array(parseInt(e.target.value)))
+                }
               }
             }}
             min={0}
