@@ -109,8 +109,8 @@ export const Hero = () => {
                     value={i === j ? 0 : costMatrix[i][j]}
                     onChange={(e) => {
                       const newMatrix = [...costMatrix]
-                      newMatrix[i][j] = parseInt(e.target.value)
-                      newMatrix[j][i] = parseInt(e.target.value)
+                      newMatrix[i][j] = parseFloat(e.target.value)
+                      newMatrix[j][i] = parseFloat(e.target.value)
                       setCostMatrix(newMatrix)
                     }}
                   />
