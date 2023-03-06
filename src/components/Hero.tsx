@@ -52,10 +52,7 @@ export const Hero = () => {
       let tour = tours[i]
       let cost = calculateCost(tour)
 
-      // If fixed start point is provided, check that it matches the starting point of the tour
-      if (fixedStart !== null && tour[0] !== fixedStart) {
-        continue
-      }
+      if (fixedStart !== null && tour[0] !== fixedStart) continue
 
       if (cost < minCost) {
         minCost = cost
