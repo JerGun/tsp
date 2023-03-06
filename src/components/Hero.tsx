@@ -15,7 +15,7 @@ export const Hero = () => {
   const [result, setResult] = useState({ minTours: [] as any[], minCost: 0 })
   const [start, setStart] = useState<null | number>(null)
 
-  function permute(arr: any): any {
+  const permute = (arr: any): any => {
     let permutations = []
     if (arr.length === 0) {
       return []
@@ -32,7 +32,7 @@ export const Hero = () => {
     return permutations
   }
 
-  function calculateCost(tour: any) {
+  const calculateCost = (tour: any) => {
     let cost = 0
     for (let i = 0; i < tour.length - 1; i++) {
       cost += costMatrix[tour[i]][tour[i + 1]]
@@ -41,7 +41,7 @@ export const Hero = () => {
     return cost
   }
 
-  function solveCircularTSP(cities: number, fixedStart: number | null = null) {
+  const solveCircularTSP = (cities: number, fixedStart: number | null = null) => {
     let citiesList = Array.from({ length: cities }, (_, index) => index)
     let tours = permute(citiesList)
 
