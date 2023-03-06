@@ -142,8 +142,12 @@ export const Hero = () => {
             onChange={(e) => {
               setCities(parseInt(e.target.value))
               if (costMatrix.length < parseInt(e.target.value)) {
-                for (let i = 0; i < parseInt(e.target.value) - costMatrix.length; i++) {
-                  costMatrix.push(Array(parseInt(e.target.value)))
+                for (let i = 0; i < parseInt(e.target.value) - costMatrix.length + 2; i++) {
+                  costMatrix.push(Array(parseInt(e.target.value)).fill(0))
+                  const newCosts = [...costMatrix]
+                  newCosts.forEach((newCost) => (newCost[costMatrix.length-1] = 0))
+                  console.log("🚀  newCosts:", newCosts)
+                  setCostMatrix(newCosts)
                 }
               }
             }}
