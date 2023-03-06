@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "TiltNeon";
+  src: url("../../public/fonts/TiltNeon-Regular.ttf");
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Maledpan";
+  src: url("../../public/fonts/Maledpan-Regular.ttf");
+  font-weight: normal;
+  font-display: swap;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  font-family: "TiltNeon", sans-serif;
+}
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
