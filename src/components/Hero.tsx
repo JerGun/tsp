@@ -84,6 +84,7 @@ export const Hero = () => {
           <div className="flex justify-end items-end space-x-2">
             {[...Array(cities + 1)].map((n, i) => (
               <input
+                key={i}
                 className={`h-10 w-10 flex text-center rounded-lg text-white bg-customGrayHeavy`}
                 value={i !== 0 ? i : "i/j"}
                 disabled
@@ -95,6 +96,7 @@ export const Hero = () => {
             <div className="space-y-2">
               {[...Array(cities)].map((n, i) => (
                 <input
+                  key={i}
                   className={`h-10 w-10 flex text-center rounded-lg text-white bg-customGrayHeavy`}
                   value={i + 1}
                   disabled
@@ -103,9 +105,10 @@ export const Hero = () => {
             </div>
             {/* Cost Data */}
             {[...Array(cities)].map((rowIndex, i) => (
-              <div className={`grid ${getNumOfRows()} gap-2`}>
+              <div className={`grid ${getNumOfRows()} gap-2`} key={i}>
                 {[...Array(cities)].map((colIndex, j) => (
                   <input
+                    key={j}
                     type="number"
                     className={`h-10 w-10 flex text-center rounded-lg ${
                       i === j ? "text-white bg-customGrayLight" : "text-black bg-white"
@@ -192,8 +195,8 @@ export const Hero = () => {
         <div className="w-fit flex justify-center items-center space-x-5 ">
           <p className="font-maledpan">เส้นทางที่เป็นไปได้ทั้งหมด</p>
           <div className="min-h-10 py-2 px-5 rounded-md text-black bg-white">
-            {result.minTours.map((tour: any[], i: any) => (
-              <p>{formatResult(tour)}</p>
+            {result.minTours.map((tour, i) => (
+              <p key={i}>{formatResult(tour)}</p>
             ))}
           </div>
         </div>
